@@ -17,7 +17,7 @@ import sys
 
 
 
-def delete_symbol(path):
+def slash_cut(path):
     for letter in path:
         if letter == "/":
             path = path[1:]
@@ -27,11 +27,11 @@ def delete_symbol(path):
 
 
 def ls(path, files):
-    path = delete_symbol(path)
+    path = slash_cut(path)
     for file in files:
         if path in file.filename:
-            file_names = file.filename[len(path):].split("/")  # разбиение имен которые идут после пути, в котором мы находимся
-            file_names = list(filter(None, file_names))  # удаляем пустых строк из списка
+            file_names = file.filename[len(path):].split("/")  #разбиение имен, которые идут после пути, в котором мы находимся
+            file_names = list(filter(None, file_names))  # удаляем пустые строки из списка
             if len(file_names) > 1 or not file_names:  # пропускаем повторы
                 continue
             print(file_names[0])
@@ -42,7 +42,7 @@ def cd(path, extension_path, files):
         path = extension_path[len("root:"):]
     else:
         path += "/" + extension_path
-    path = delete_symbol(path)
+    path = slash_cut(path)
 
     global local_path
     if path == "":
@@ -71,7 +71,7 @@ def cat(path, extension_path, zip_file):
         path = extension_path[len("root:"):]
     else:
         path += "/" + extension_path
-    path = delete_symbol(path)
+    path = slash_cut(path)
 
 
     #Обработка .//
@@ -115,7 +115,6 @@ while command != "exit":
 
     elif command[0] == "cd":
         try:
-            #print (command[1])
             command[1]
         except IndexError:
             print("Wrong syntax")
