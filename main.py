@@ -44,8 +44,8 @@ def cd(path, extension_path, files):
         path += "/" + extension_path
     path = delete_symbol(path)
 
-    global local_path
 
+    global local_path
     if path == "":
         local_path = ""
         return True
@@ -60,7 +60,7 @@ def cd(path, extension_path, files):
             cd(local_path, path, all_files)
             return True
     for file in files:
-        if path in file.filename:
+        if (path + '/') == file.filename:
             local_path = "/" + path
             return True
     return False
@@ -92,8 +92,10 @@ def cat(path, extension_path, zip_file):
         print("Can`t open this file")
 
 
+
+
 try:
-    sys.argv[1]
+    sys.argv[1] #Указан ли zip файл
 except IndexError:
     exit(0)
 zipfile = ZipFile(sys.argv[1])
@@ -106,7 +108,6 @@ flag = 0
 while command != "exit":
     flag = 0
     command = command.split(" ")
-
     if command[0] == "pwd":
         print("  " + ROOT_PATH + ("/" if not local_path else local_path)) # ("/" if not local_path else local_path) проверка пуст ли local_path
 
@@ -115,6 +116,7 @@ while command != "exit":
 
     elif command[0] == "cd":
         try:
+            #print (command[1])
             command[1]
         except IndexError:
             print("Wrong syntax")
