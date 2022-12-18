@@ -43,7 +43,7 @@ def cd(path, extension_path, files):
     else:
         path += "/" + extension_path
     path = delete_symbol(path)
-
+    print(path)
 
     global local_path
     if path == "":
@@ -128,7 +128,13 @@ while command != "exit":
                 print("The path does not exist")
 
     elif command[0] == "cat":
-        cat(local_path, command[1], sys.argv[1])
+        try:
+            command[1]
+        except IndexError:
+            print("Wrong syntax")
+            flag = 1
+        if flag == 0:
+            cat(local_path, command[1], sys.argv[1])
 
     else:
         print("Unknown command")
