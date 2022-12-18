@@ -81,7 +81,7 @@ def cat(path, extension_path, zip_file):
 
     flag = False
     for file in ZipFile(zip_file).filelist:
-        if (path in file.filename) and ('.' in path):
+        if (path in file.filename) and ('.' in path) and ('.' != path):
             flag = True
             with ZipFile(zip_file) as files:
                 with files.open(path, 'r') as file:
