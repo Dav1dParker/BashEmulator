@@ -66,18 +66,20 @@ def cd(path, extension_path, files):
 
 
 def cat(path, extension_path, zip_file):
-
+    backpath = path
     if "root:" in extension_path: #Указание полного пути
         path = extension_path[len("root:"):]
     else:
         path += "/" + extension_path
     path = slash_cut(path)
 
-
     #Обработка .//
     global local_path
+    back_local_path = local_path
     if "../" in path:
-        path = path[path.find("../") + 3:]
+        path = path[path.find("../") + 2:]
+        local_path = local_path[:len(local_path) - len(local_path.split("/")[-1]) - 1]
+        path = slash_cut("/" if not local_path else local_path + path)
 
     flag = False
     for file in ZipFile(zip_file).filelist:
@@ -87,6 +89,9 @@ def cat(path, extension_path, zip_file):
                 with files.open(path, 'r') as file:
                     for line in file.readlines():
                         print(line.decode('utf8').strip())
+            break
+    path = backpath
+    local_path = back_local_path
     if not flag:
         print("Can`t open this file")
 
