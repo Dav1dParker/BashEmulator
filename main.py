@@ -30,9 +30,9 @@ def ls(path, files):
     path = slash_cut(path)
     for file in files:
         if path in file.filename:
-            file_names = file.filename[len(path):].split("/")  #разбиение имен, которые идут после пути, в котором мы находимся
-            file_names = list(filter(None, file_names))  # удаляем пустые строки из списка
-            if len(file_names) > 1 or not file_names:  # пропускаем повторы
+            file_names = file.filename[len(path):].split("/")
+            file_names = list(filter(None, file_names))
+            if len(file_names) > 1 or not file_names:
                 continue
             print(file_names[0])
 
@@ -51,7 +51,7 @@ def cd(path, extension_path, files):
 
     if "../" in path:
         path = path[path.find("../") + 3:]
-        if len(path) == 0: # Проверяем указан ли путь после ../
+        if len(path) == 0:
             local_path = local_path[:len(local_path) - len(local_path.split("/")[-1]) - 1]
             return True
         else:
@@ -67,7 +67,7 @@ def cd(path, extension_path, files):
 
 def cat(path, extension_path, zip_file):
     backpath = path
-    if "root:" in extension_path: #Указание полного пути
+    if "root:" in extension_path: 
         path = extension_path[len("root:"):]
     else:
         path += "/" + extension_path
@@ -94,8 +94,6 @@ def cat(path, extension_path, zip_file):
     local_path = back_local_path
     if not flag:
         print("Can`t open this file")
-
-
 
 
 try:
@@ -141,5 +139,4 @@ while command != "exit":
 
     else:
         print("Unknown command")
-
     command = input(ROOT_PATH + ("/" if not local_path else local_path) + "> ")
